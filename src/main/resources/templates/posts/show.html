@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www/thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View a Post</title>
+</head>
+<body>
+<h1>Here are all the posts</h1>
+<h2 th:text="${post.title}"></h2>
+<p>Post number <span th:text="${id}"></span> </p>
+<p th:text="${post.body}"></p>
+</body>
+</html>
