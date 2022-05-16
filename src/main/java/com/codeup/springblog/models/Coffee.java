@@ -15,6 +15,7 @@ public class Coffee {
 
     @Column(nullable = false)
     private String origin;
+
     @Column(nullable = false, length = 100)
     private String brand;
 
@@ -36,6 +37,12 @@ public class Coffee {
 
     public Coffee(String roast, String brand) {
         this.roast = roast;
+        this.brand = brand;
+    }
+
+    public Coffee(String roast, String origin, String brand) {
+        this.roast = roast;
+        this.origin = origin;
         this.brand = brand;
     }
 
