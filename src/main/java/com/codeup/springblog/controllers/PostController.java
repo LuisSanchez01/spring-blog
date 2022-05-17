@@ -1,6 +1,7 @@
 package com.codeup.springblog.controllers;
 
 import com.codeup.springblog.models.Post;
+import com.codeup.springblog.repositories.PostRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +12,18 @@ import java.util.List;
 @Controller
 @RequestMapping("/posts")
 public class PostController {
+
+    private final PostRepository postDao;
+
+    public PostController(PostRepository postDao) {
+        this.postDao = postDao;
+    }
+
+    @GetMapping("/posts")
+    public String index(Model model){
+        model.addAttribute("posts", postDao.findAll());
+        return "posts/index";
+    }
 
     public List<Post> generatePosts(){
         List<Post> allPosts = new ArrayList<>();
@@ -46,12 +59,17 @@ public class PostController {
     @GetMapping("/create")
     @ResponseBody
     public String createPost(){
-        return "Here is the form to create a post!";
+        return "posts/create";
     }
+
 
     @PostMapping("/create")
     @ResponseBody
-    public String submitPost(){
+    public String submitPost(
+            @RequestParam(name = "title") String title,
+            @RequestParam(name = "body") String body){
+        Post post = new Post(title, body);
+        postDao.save(post);
         return "You just created a post!";
     }
 }
