@@ -61,6 +61,12 @@ public class PostController {
         return "/posts/create";
     }
 
+    @GetMapping("/api")
+    @ResponseBody
+    public List<Post> returnPosts(){
+        return postDao.findAll();
+    }
+
 
     @PostMapping("/create")
     public String submitPost(

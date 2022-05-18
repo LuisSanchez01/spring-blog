@@ -4,8 +4,8 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "posts")
-public class Post {
+@Table(name = "posts1")
+public class Posts {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,14 +18,14 @@ public class Post {
     private String body;
 
 
-    public Post(){}
+    public Posts(){}
 
-    public Post(String title, String body) {
+    public Posts(String title, String body) {
         this.title = title;
         this.body = body;
     }
 
-    public Post(long id, String title, String body) {
+    public Posts(long id, String title, String body) {
         this.id = id;
         this.title = title;
         this.body = body;
@@ -55,9 +55,7 @@ public class Post {
         this.body = body;
     }
 
-    @OneToOne
-    private PostDetails postDetails;
-
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "post")
     private List<PostImage> images;
 }
+
