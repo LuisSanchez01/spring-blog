@@ -2,12 +2,14 @@ package com.codeup.springblog.controllers;
 
 import com.codeup.springblog.models.Post;
 import com.codeup.springblog.models.PostImage;
+import com.codeup.springblog.models.User;
 import com.codeup.springblog.repositories.PostRepository;
 import com.codeup.springblog.repositories.UserRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -15,9 +17,11 @@ import java.util.List;
 public class PostController {
 
     private final PostRepository postDao;
+    private final UserRepository userDao;
 
     public PostController(PostRepository postDao, UserRepository userDao) {
         this.postDao = postDao;
+        this.userDao = userDao;
     }
 
     @GetMapping("/posts")
@@ -25,6 +29,32 @@ public class PostController {
         model.addAttribute("posts", postDao.findAll());
         return "posts/index";
     }
+
+    @GetMapping("/posts/{id}")
+    @ResponseBody
+    public String show(@PathVariable long id) { return "Here is the post " + id;}
+
+//    @GetMapping("/posts/create")
+//    public String create(){ return "posts/create";}
+//
+//    public String insert(@RequestParam String title, @RequestParam String body,
+//                         @RequestParam List<String> urls) {
+//        List<PostImage> images = new ArrayList<>();
+//        User author = userDao.getById(1L);
+//        Post post = new Post(title, body);
+//
+//        for (String url : urls) {
+//            PostImage postImage = new PostImage(url);
+//            postImage.setPost(post);
+//            images.add(postImage);
+//        }
+//
+//        post.setImages(images);
+//
+//        post.setUser(author);
+//        postDao.save(post);
+//
+//    }
 
 //    public List<Post> generatePosts(){
 //        List<Post> allPosts = new ArrayList<>();
@@ -73,7 +103,8 @@ public class PostController {
     public String submitPost(
             @RequestParam(name = "title") String title,
             @RequestParam(name = "body") String body){
-        Post post = new Post(title, body);
+        User user = userDao.findAll().get(0);
+        Post post = new Post(title, body, user);
         postDao.save(post);
         return "redirect:/posts";
     }

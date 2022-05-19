@@ -1,6 +1,7 @@
 package com.codeup.springblog.models;
 
 import com.codeup.springblog.controllers.MathController;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import java.util.List;
@@ -22,9 +23,10 @@ public class Post {
 
     public Post(){}
 
-    public Post(String title, String body) {
+    public Post(String title, String body, User user) {
         this.title = title;
         this.body = body;
+        this.user = user;
     }
 
     public Post(long id, String title, String body, User user) {
@@ -32,6 +34,10 @@ public class Post {
         this.title = title;
         this.body = body;
         this.user = user;
+    }
+
+    public Post(String title, String body) {
+
     }
 
     public User getUser() {
@@ -78,4 +84,18 @@ public class Post {
 
     @ManyToOne
     private User user;
+
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+            name="post_tag",
+            joinColumns = {@JoinColumn(name = "post_id")},
+            inverseJoinColumns = {@JoinColumn(name = "tag_id")}
+    )
+    @JsonBackReference
+    private List<Tag> tags;
+
+
+    public void setImages(List<PostImage> images) {
+
+    }
 }
