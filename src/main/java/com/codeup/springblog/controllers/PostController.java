@@ -1,6 +1,7 @@
 package com.codeup.springblog.controllers;
 
 import com.codeup.springblog.models.Post;
+import com.codeup.springblog.models.PostImage;
 import com.codeup.springblog.repositories.PostRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -75,5 +76,29 @@ public class PostController {
         Post post = new Post(title, body);
         postDao.save(post);
         return "redirect:/posts";
+    }
+
+    @PostMapping
+    public String postDetails(Model model){
+        List<Post> postDetails = generatePosts();
+        model.addAttribute("postDetails", postDetails);
+        return "posts/details";
+    }
+
+    @GetMapping("/posts/add")
+    public String addPost(){
+        return "posts/add";
+    }
+
+    @PostMapping("/add")
+    public String addImage(@RequestParam(name = "image_title") String image_title, @RequestParam(name = "url")
+            String url, @RequestParam(name = "post_id") Long post_id){
+        Post post = postDao.getById(post_id);
+        PostImage postImage = new PostImage(image_title, url, post);
+
+//        post.getPostImageList().add(postImage);
+        postDao.save(post);
+//        postImageDao.save(postImage);
+        return "redirect:/posts/details";
     }
 }

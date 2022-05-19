@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www/thymeleaf.org"  lang="en">
+<head th:replace="partials/partials.html :: head ('Post')">
+    <meta charset="UTF-8">
+    <title>Details</title>
+</head>
+<body>
+   <h1>Here are all the posts:</h1>
+<form action="/posts/details" method="post">
+<div th:each="image : ${post.postImageList}" class="img_list">
+   <div th:each="image : ${post.postImageList}" class="img-list">
+       <img th:src="${image.url}">
+   </div>
+
+   <h2 th:text="${post.title}"></h2>
+   <p th:text="${post.body}"></p>
+   <p>Post info</p>
+   <ul>
+       <li>Posted: <span th:text="${post.postDetails.historyOfPost}"></span></li>
+       <li>Just how awesome? <span th:text="${post.postDetails.isAwesome}"></span></li>
+       <li>Topic: <span th:text="${post.postDetails.topicDescription}"></span></li>
+   </ul>
+</div>
+</form>
+
+
+</body>
+</html>

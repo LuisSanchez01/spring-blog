@@ -20,6 +20,10 @@ public class PostImage {
     @JoinColumn(name = "post_id")
     private Post post;
 
+    public PostImage(String image_title, String url, Post post) {
+
+    }
+
     public Post getPost() {
         return post;
     }

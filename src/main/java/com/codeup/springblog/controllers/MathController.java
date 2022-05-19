@@ -1,5 +1,6 @@
 package com.codeup.springblog.controllers;
 
+import com.codeup.springblog.models.PostImage;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 

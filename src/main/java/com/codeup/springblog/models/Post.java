@@ -1,5 +1,7 @@
 package com.codeup.springblog.models;
 
+import com.codeup.springblog.controllers.MathController;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -60,4 +62,8 @@ public class Post {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "post")
     private List<PostImage> images;
+
+    public MathController getPostImageList() {
+        return null;
+    }
 }
