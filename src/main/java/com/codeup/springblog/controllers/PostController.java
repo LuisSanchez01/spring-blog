@@ -92,6 +92,23 @@ public class PostController {
         model.addAttribute("post", new Post());
         return "posts/create";
     }
+    @PostMapping("/create")
+    public String createPost(@ModelAttribute Post post, Model model) {
+        postDao.save(post);
+        return "redirect: /posts";
+    }
+
+    @GetMapping("/edit")
+    public String showEditForm(Model model) {
+        model.addAttribute("post", new Post());
+        return "posts/edit";
+    }
+
+    @PostMapping("/edit")
+    public String submitForm(@ModelAttribute Post post, Model model) {
+        postDao.save(post);
+        return "redirect:/posts";
+    }
 
     @GetMapping("/api")
     @ResponseBody
@@ -117,10 +134,10 @@ public class PostController {
 //        return "posts/details";
 //    }
 
-    @GetMapping("/posts/add")
-    public String addPost(){
-        return "posts/add";
-    }
+//    @GetMapping("/posts/add")
+//    public String addPost(){
+//        return "posts/add";
+//    }
 
     @PostMapping("/add")
     public String addImage(@RequestParam(name = "image_title") String image_title, @RequestParam(name = "url")
