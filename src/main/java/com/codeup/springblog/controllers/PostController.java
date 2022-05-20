@@ -88,8 +88,9 @@ public class PostController {
 //    }
 
     @GetMapping("/create")
-    public String createPost(){
-        return "/posts/create";
+    public String showCreateForm(Model model) {
+        model.addAttribute("post", new Post());
+        return "posts/create";
     }
 
     @GetMapping("/api")
@@ -131,5 +132,11 @@ public class PostController {
         postDao.save(post);
 //        postImageDao.save(postImage);
         return "redirect:/posts/details";
+    }
+
+
+    @PostMapping("/posts/create")
+    public String create(@ModelAttribute Post post) {
+        return "posts/create";
     }
 }
