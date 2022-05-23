@@ -1,11 +1,16 @@
 package com.codeup.springblog.controllers;
 
-import com.codeup.springblog.models.PostImage;
+
+import com.codeup.springblog.services.MathService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class MathController {
+
+    MathService mathService = new MathService();
+
     @RequestMapping(path = "/add100To/{number}", method = RequestMethod.GET)
     @ResponseBody
     public String addOneHundred(@PathVariable int number){
@@ -36,4 +41,18 @@ public class MathController {
         return num1/num2;
     }
 
+
+
+    public String doMath(@RequestParam(name = "inputA") double inputA,
+                         @RequestParam(name = "inputB") double inputB,
+                         @RequestParam(name = "operation") String operation,
+                         Model model
+    ) {
+
+        double total = mathService.doOperation(operation, inputA, inputB);
+
+        model.addAttribute("total", total);
+
+        return "math/index";
+    }
 }

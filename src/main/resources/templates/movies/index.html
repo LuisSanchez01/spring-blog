@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="partials/partials.html :: head ('View All Movies')"></head>
+<style>
+    table {
+        min-width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+</style>
+<body>
+<ul th:replace="partials/partials.html :: navbar"></ul>
+<h2>Movies</h2>
+<div>
+    <form action="/search" th:method="post">
+        <label for="search">Search: </label>
+        <input type="text" name="search" id="search">
+        <button type="submit">Search!</button>
+    </form>
+</div>
+<table>
+    <thead>
+    <tr>
+        <th>Cover</th>
+        <th>Title</th>
+        <th>Avg Rating</th>
+        <th>Add Rating</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    @@ -41,14 +43,19 @@ <h2>Movies</h2>
+    <tr th:each="movie : ${movies}">
+        <td><img th:src="${movie.coverImage}"></td>
+        <td><a th:href="@{/movies/{id}(id=${movie.id})}">[[${movie.title}]]</a></td>
+        <td>  <form th:method="post"
+        <td>
+            [[${ratingsService.getAverageRatingForMovie(movie.id)}]]
+        </td>
+        <td>
+            <form th:method="post"
+                  th:action="@{/movies/ratings/{id}(id=${movie.id})}">
+                <input type="number" name="rating" />
+                <button type="submit">Add</button> </form></td>
+        <td>
+            <form th:method="post"
+                  th:action="@{/movies/delete}"
+            > <button type="submit" name="id" th:value="${movie.id}">X</button> </form> </td>
+        > <button type="submit" name="id" th:value="${movie.id}">X</button> </form>
+        </td>
+
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
