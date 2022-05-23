@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "user")
+@Table(name = "user", uniqueConstraints = @UniqueConstraint(columnNames = {"username", "email"}))
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,6 +23,14 @@ public class User {
     private List<Post> posts;
 
     public User(){}
+
+    public User(User copy) {
+        id = copy.id;
+        email = copy.email;
+        posts = copy.posts;
+        username = copy.username;
+        password = copy.password;
+    }
 
     public User(long id, String username, String email, String password) {
         this.id = id;
