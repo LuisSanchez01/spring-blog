@@ -20,6 +20,30 @@ public class Post {
     @Column(nullable = false, columnDefinition = "Text")
     private String body;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+
+    @OneToOne
+    private PostDetails postDetails;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "post")
+    private List<PostImage> images;
+
+    public MathController getPostImageList() {
+        return null;
+    }
+
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+            name="post_tag",
+            joinColumns = {@JoinColumn(name = "post_id")},
+            inverseJoinColumns = {@JoinColumn(name = "tag_id")}
+    )
+    @JsonBackReference
+    private List<Tag> tags;
+
 
     public Post(){}
 
@@ -71,29 +95,6 @@ public class Post {
     public void setBody(String body) {
         this.body = body;
     }
-
-    @OneToOne
-    private PostDetails postDetails;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "post")
-    private List<PostImage> images;
-
-    public MathController getPostImageList() {
-        return null;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(
-            name="post_tag",
-            joinColumns = {@JoinColumn(name = "post_id")},
-            inverseJoinColumns = {@JoinColumn(name = "tag_id")}
-    )
-    @JsonBackReference
-    private List<Tag> tags;
 
 
     public void setImages(List<PostImage> images) {

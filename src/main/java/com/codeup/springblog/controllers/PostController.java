@@ -72,14 +72,14 @@ public class PostController {
     public String submitPost(
             @ModelAttribute Post post
     ) {
-//        User user = usersDao.getById(1L);
+        User user = usersDao.getById(1L);
 
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().
-                getPrincipal();
+//        User user = (User) SecurityContextHolder.getContext().getAuthentication().
+//                getPrincipal();
 //        long userId = user.getId();
         post.setUser(user);
 
-        emailService.prepareAndSend(post, post.getTitle(), post.getBody());
+//        emailService.prepareAndSend(post, post.getTitle(), post.getBody());
 
         postsDao.save(post);
         return "redirect:/posts";
