@@ -109,4 +109,13 @@ public class PostController {
         return "redirect:/posts/" + post.getId();
     }
 
+
+    @PostMapping("/delete")
+    public String deletePost(
+            @ModelAttribute Post post
+    ) {
+        postsDao.save(post);
+        return "redirect:/posts";
+    }
+
 }
